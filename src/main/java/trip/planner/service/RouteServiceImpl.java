@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import trip.planner.dto.RouteDTO;
+import trip.planner.dto.route.RouteDTO;
 import trip.planner.dto.RouteDetailsDto;
 import trip.planner.entity.Route;
 import trip.planner.entity.RouteDetails;
@@ -13,8 +13,6 @@ import trip.planner.repository.RouteDetailsRepository;
 import trip.planner.repository.RouteRepository;
 import trip.planner.repository.UserRepository;
 import trip.planner.utils.RouteMapper;
-
-import java.util.List;
 
 @Log4j2
 @Service

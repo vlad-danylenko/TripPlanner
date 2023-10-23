@@ -1,7 +1,7 @@
 package trip.planner.utils;
 
 import org.springframework.stereotype.Component;
-import trip.planner.dto.RouteDTO;
+import trip.planner.dto.route.RouteDTO;
 import trip.planner.entity.Route;
 @Component
 public class RouteMapper {

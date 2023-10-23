@@ -1,6 +1,6 @@
 package trip.planner.service;
 
-import trip.planner.dto.RouteDTO;
+import trip.planner.dto.route.RouteDTO;
 import trip.planner.dto.RouteDetailsDto;
 
 public interface RouteService {

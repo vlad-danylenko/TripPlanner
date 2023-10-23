@@ -1,4 +1,4 @@
-package trip.planner.dto;
+package trip.planner.dto.route;
 
 import lombok.Data;
 import trip.planner.entity.User;
