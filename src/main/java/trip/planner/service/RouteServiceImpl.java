@@ -5,14 +5,18 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import trip.planner.dto.route.RouteDTO;
-import trip.planner.dto.RouteDetailsDto;
+import trip.planner.dto.route.RouteDetailsDto;
 import trip.planner.entity.Route;
 import trip.planner.entity.RouteDetails;
 import trip.planner.entity.User;
 import trip.planner.repository.RouteDetailsRepository;
 import trip.planner.repository.RouteRepository;
 import trip.planner.repository.UserRepository;
+import trip.planner.utils.RouteDetailsMapper;
 import trip.planner.utils.RouteMapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -21,13 +25,15 @@ public class RouteServiceImpl implements RouteService {
     private final RouteDetailsRepository routeDetailsRepository;
     private final UserRepository userRepository;
     private final RouteMapper routeMapper;
+    private final RouteDetailsMapper routeDetailsMapper;
 
 
-    public RouteServiceImpl(RouteRepository routeRepository, RouteDetailsRepository routeDetailsRepository, UserRepository userRepository, RouteMapper routeMapper) {
+    public RouteServiceImpl(RouteRepository routeRepository, RouteDetailsRepository routeDetailsRepository, UserRepository userRepository, RouteMapper routeMapper, RouteDetailsMapper routeDetailsMapper) {
         this.routeRepository = routeRepository;
         this.routeDetailsRepository = routeDetailsRepository;
         this.userRepository = userRepository;
         this.routeMapper = routeMapper;
+        this.routeDetailsMapper = routeDetailsMapper;
     }
 
     @Override
@@ -85,5 +91,27 @@ public class RouteServiceImpl implements RouteService {
         } else {
             return "Route not found";
         }
+    }
+
+    @Override
+    public List<RouteDTO> getRoutesByUser(User user) {
+        List<Route> routes = routeRepository.findByCreatedBy(user);
+
+        if (routes == null || routes.isEmpty()) {
+            return null;
+        }
+
+        return routes.stream()
+                .map(routeMapper::toDTO)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<RouteDetailsDto> getRouteDetails(Route route) {
+        List<RouteDetails> routeDetails = routeDetailsRepository.findByRoute(route);
+        return routeDetails.stream()
+                .map(routeDetailsMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

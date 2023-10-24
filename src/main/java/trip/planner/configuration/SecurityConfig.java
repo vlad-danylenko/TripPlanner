@@ -26,9 +26,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         (authorize) ->
                                 authorize
+                                        .requestMatchers("/api/users/login").permitAll()
                                         .requestMatchers("/api/users/create").permitAll()
-                                        .anyRequest().authenticated()
-                )
+                                        .requestMatchers("/api/users/{userId}").hasRole("ADMIN")
+                                        .requestMatchers("/api/routes/create").hasAnyRole("USER","ADMIN")
+                                        .requestMatchers("/api/routes/add").hasAnyRole("USER","ADMIN")
+                                        .requestMatchers("/api/routes/delete/{routeId}/{routeStep}").hasAnyRole("USER","ADMIN")
+                                        .requestMatchers("/api/routes/delete/{routeId}").hasRole("ADMIN")
+                                        .requestMatchers("/api/routes/user/{userId}").hasAnyRole("USER","ADMIN")
+                                        .requestMatchers("/api/routes/detailed/{routeId}").hasAnyRole("USER","ADMIN")
+                                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
         return httpSecurity.build();

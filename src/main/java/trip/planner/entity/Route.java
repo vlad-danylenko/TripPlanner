@@ -42,6 +42,16 @@ public class Route {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", routeDesc='" + routeDesc + '\'' +
+                ", startDt=" + startDt +
+                ", finishDt=" + finishDt +
+                ", createdBy=" + (createdBy != null ? createdBy.getId() : null) +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 
 }
